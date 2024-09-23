@@ -13,6 +13,10 @@ h1{
     margin: 10px;
 }
 
+.hints{
+    cursor: pointer;
+}
+
 .header{
 
     margin: auto;
@@ -62,3 +66,17 @@ table td{
     border-radius: 10%;
     
  }
+
+ .timer {
+   
+    margin-left: auto;
+    margin-right: auto;
+   
+    width: 50%;
+    height: 50px;
+    text-align: center;
+    padding: 5px 0px 5px 0 ;
+    font-family:monospace;
+    font-size: medium;
+    font-weight: bold;
+}

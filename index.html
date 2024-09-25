@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>MineSweeper</title>
 </head>
+
 <body onload="onInit()">
-    <h1>MineSweeper!</h1>
+    <h1><img src="img/logo.png" ></h1>
 
- 
 
-    <div class="buttons"></div>
-    <div class="smiley"></div>
-    <div class="header">
-        <div class="timer">Timer: 
-            <div class="time"> 00:000</div></div>
+    <div class="header"></div>
+        <div class="buttons"></div>
+        <div class="smiley"></div>
+        <div class="timer">Timer:
+            <div class="time"> 000</div>
+        </div>
+      
         <div class="marked"></div>
-        <div class="life"></div>
-        <div class="hints"></div>
+        <div class='line2'>
+            <div class="life">Life</div>
+            <div class="hints">Hints</div>
+        </div>
+        <div class='line3'>
+            <div class='line3a'>
+                <div class="SafeClick"></div>
+                <div class="clicksAvailable"></div>
+            </div>
 
+            <div class="MineExterminator"></div>
+        </div>
+
+
+        <!-- <div class="ManuallyPositionedMines"></div> -->
+        <div class="bestScore"></div>
+        <!-- <div class="bestScore"> 
+            <div class="score"> 00:000</div></div> -->
     </div>
 
-    <div class="bestScore"></div>
+
+
 
     <table class="board-container">
         <tbody class="board"></tbody>
     </table>
+
+   
 
 
     <div class="footer">
@@ -38,4 +59,5 @@
     <script src="js/main.js "></script>
     <script src="js/utils.js"></script>
 </body>
+
 </html>

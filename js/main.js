@@ -1,22 +1,23 @@
 'use strict'
 
-const MINE = '💣'
-const FLAG = '🚩'
-const SMILEYNORMAL = '😄'
-const SMILEYDEAD = '🤯'
-const SMILEYWIN = '😎'
-const LIFE = '💗'
-const HINT = '💡'
-const USED_HINT = '🔅'
+const MINE = '<img src= "/img/0-mine.png" width="20" height="20" >' //'💣'
+const FLAG = '<img src= "/img/0-flag.png" width="20" height="20" >'//'🚩'
+const SMILEYNORMAL = '<img src= "/img/tiffi-normal.png" width="50" height="50" >'//'😄'
+const SMILEYDEAD = '<img src= "/img/tiffi-lose.png" width="50" height="50" >'//'🤯'
+const SMILEYWIN = '<img src= "/img/tiffi-win.png" width="50" height="50" >'//'😎'
+const LIFE = '<img src= "/img/0-life.png" width="20" height="20" >'//'💗'
+const LOST_LIFE = '<img src= "/img/0-lostlife.png" width="20" height="20" >'//'💗'
+const HINT = '<img src= "/img/0-unusedhint.png" width="20" height="20" >'//'💡'
+const USED_HINT = '<img src= "/img/0-usedhint.png" width="20" height="20" >'//'🔅'
 
 var gBoard = []
 
 var gMines = []
 
 var gLevels = [
-    { SIZE: 4, MINES: 2, HINTS: 1, LIVES: 1 },
-    { SIZE: 8, MINES: 14, HINTS: 2, LIVES: 2 },
-    { SIZE: 12, MINES: 32, HINTS: 3, LIVES: 3 },
+    { SIZE: 4, MINES: 2, HINTS: 1, LIVES: 1, MINEEXTERMINATOR: 1 },
+    { SIZE: 8, MINES: 14, HINTS: 2, LIVES: 2, MINEEXTERMINATOR: 2 },
+    { SIZE: 12, MINES: 32, HINTS: 3, LIVES: 3, MINEEXTERMINATOR: 3 },
 ]
 
 var gLevel = gLevels[0]
@@ -36,10 +37,18 @@ var gGameInterval
 var gIsvictory = false
 var gBestScoreLevel = 'bestScore' + gLevel.SIZE
 var display = document.querySelector('.time')
+
+
 var isRuning = false
 var startTime = 0
 var timer = null
-var elapsedTime = 0 
+var gSeconds
+var elapsedTime = 0
+var gSafeClicks
+var isManuallMines = false
+// var gMineCount
+
+
 
 window.addEventListener("contextmenu", e => e.preventDefault())
 
@@ -48,12 +57,14 @@ function onInit() {
     gGame.isOn = true
     gGame.shownCount = 0
     gGame.markedCount = 0
-    gBoard.secsPassed = 0
+    gGame.secsPassed = 0
     gLifeLost = 0
     gHintUsed = 0
     gHintIsOn = false
     gMines = []
-
+    gSafeClicks = 3
+    gBestScoreLevel = 'bestScore' + gLevel.SIZE
+    // gMineCount = 0
     gBoard = buildBoard()
     renderBoard(gBoard)
     renderButtons()
@@ -62,16 +73,23 @@ function onInit() {
     renderSmiley()
     resetTimer()
     renderBestScore()
-    console.log("gLevel.LIVES", gLevel.LIVES)
-    console.log("gLevels[0].LIVES", gLevels[0].LIVES)
-    console.log("gLevels[1].LIVES", gLevels[1].LIVES)
-    console.log("gLevels[2].LIVES", gLevels[2].LIVES)
+    renderSafeClickBtn()
+    renderSafeClicksCounter()
+    renderMineExterminatorBtn()
+    // renderManuallyMinesBtn()
+
+    // console.log('gBestScoreLevel',gBestScoreLevel)
+    // console.log('elapsedTime',elapsedTime)
+    // console.log('bestScore4',localStorage.getItem('bestScore4'))
+    // console.log('bestScore8',localStorage.getItem('bestScore8'))
+    // console.log('bestScore12',localStorage.getItem('bestScore12'))
 
 }
 
 function chooseLevel(level) {
 
     clearInterval(gGameInterval)
+
 
     switch (level.innerText) {
 
@@ -142,6 +160,19 @@ function placeMines(board, idxI, idxJ) {
         }
     }
 
+    // for (var i = 0; i < board.length; i++) {
+    //     for (var j = 0; j < board[0].length; j++) {
+    //         if (!board[i][j].isMine) {
+    //             board[i][j].minesAroundCount = setMinesNegsCount(i, j, board)
+    //         }
+    //     }
+    // }
+    mapNeighbors(board)
+
+    return board
+}
+
+function mapNeighbors(board) {
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[0].length; j++) {
             if (!board[i][j].isMine) {
@@ -149,8 +180,6 @@ function placeMines(board, idxI, idxJ) {
             }
         }
     }
-
-    return board
 }
 
 function setMinesNegsCount(cellI, cellJ, mat) {
@@ -189,8 +218,8 @@ function renderBoard(board) {
                 }
             }
 
-            //strHTML += `<td class="${className}" onclick="onCellClicked(this, ${i}, ${j})">${cell}</td>`
-            strHTML += `<td class="${className}" onclick="onCellClicked(this, ${i}, ${j})" oncontextmenu="onCellMarked(this, ${i}, ${j})">${cellDisp}</td>`
+            //strHTML += `<td class="${className}" onclick="onCellClicked(this, ${i}, ${j})" oncontextmenu="onCellMarked(this, ${i}, ${j})">${cellDisp}</td>`
+            strHTML += `<td class="${className}" onclick="onCellClicked(${i}, ${j})" oncontextmenu="onCellMarked(this, ${i}, ${j})">${cellDisp}</td>`
 
         }
         strHTML += '</tr>'
@@ -228,9 +257,14 @@ function renderLives() {
 
 function genLives() {
     var livesHtml = LIFE
+    var usedLivesHtml = LOST_LIFE
     var strLives = ''
     for (var i = 0; i < gLevel.LIVES - gLifeLost; i++) {
         strLives += livesHtml
+    }
+
+    for (var i = 0; i < gLifeLost; i++) {
+        strLives += usedLivesHtml
     }
     return strLives
 }
@@ -261,15 +295,17 @@ function genHints() {
 
 function onClickHint() {
 
-    gHintUsed++
-    gHintIsOn = true
+    if (gHintUsed < gLevel.HINTS) {
+        gHintUsed++
+        gHintIsOn = true
+        renderHints()
+    }
 
-    renderHints()
 
 }
 
 function renderSmiley() {
-    var strHtmlSmiley = `<button onclick="onInit()">`
+    var strHtmlSmiley = `<button onclick="onInit()""class="b4">`
     var normal = `${SMILEYNORMAL}`
     var win = `${SMILEYWIN}`
     var lose = `${SMILEYDEAD}`
@@ -279,29 +315,127 @@ function renderSmiley() {
     console.log('gIsvictory', gIsvictory)
     strHtmlSmiley += `</button>`
     var elSmiley = document.querySelector('.smiley')
-    elSmiley.innerHTML = strHtmlSmiley;
+    elSmiley.innerHTML = strHtmlSmiley
 }
+
+function renderSafeClickBtn() {
+    var strHtmlSafeClick = `<button onclick="onSafeClick()" class="b5">Safe Click</button>`
+
+    var elSafeClick = document.querySelector('.SafeClick')
+    elSafeClick.innerHTML = strHtmlSafeClick
+}
+
+function renderSafeClicksCounter() {
+    var clicksAvailable = document.querySelector('.clicksAvailable')
+    clicksAvailable.textContent = gSafeClicks + ' clicks available'
+}
+
+
+function onSafeClick() {
+
+    if (!gSafeClicks) return
+
+
+    var safeCells = []
+
+    for (var i = 0; i < gLevel.SIZE; i++) {
+        for (var j = 0; j < gLevel.SIZE; j++) {
+            if (!gBoard[i][j].isMine && !gBoard[i][j].isShown) {
+                safeCells.push({ i: i, j: j })
+            }
+        }
+    }
+
+    var randIdxSafeCell = getRandomInt(0, safeCells.length)
+
+    var randElementId = `.cell-${safeCells[randIdxSafeCell].i}-${safeCells[randIdxSafeCell].j}`
+    var elRandSafeCell = document.querySelector(randElementId)
+    elRandSafeCell.style.border = "5px solid green"
+    
+    safeCells.splice(randIdxSafeCell, 1)
+
+    setTimeout(() => {
+        renderBoard(gBoard)
+    }, 2000)
+
+    gSafeClicks--
+    renderSafeClicksCounter()
+
+}
+
+function renderMineExterminatorBtn() {
+    var strHtmlMineExterminator = `<button onclick="onClickMineExterminator()"class="b6">Mine Exterminator</button>`
+
+    var elMineExtermiantor = document.querySelector('.MineExterminator')
+    elMineExtermiantor.innerHTML = strHtmlMineExterminator
+
+}
+
+function onClickMineExterminator() {
+    console.log('gMines.length before', gMines.length)
+
+    while (gLevel.MINES - gMines.length < gLevel.MINEEXTERMINATOR) {
+        var Idx = getRandomInt(0, gMines.length)
+        if (!gBoard[gMines[Idx].i][gMines[Idx].j].isMarked) {
+            gBoard[gMines[Idx].i][gMines[Idx].j].isMine = false
+            gMines.splice(Idx, 1)
+        }
+
+    }
+
+    // for (var i = 0; i < gBoard.length; i++) {
+    //     for (var j = 0; j < gBoard[0].length; j++) {
+    //         if (!gBoard[i][j].isMine) {
+    //             gBoard[i][j].minesAroundCount = setMinesNegsCount(i, j, gBoard)
+    //         }
+    //     }
+    // }
+    mapNeighbors(gBoard)
+    renderBoard(gBoard)
+    console.log('gMines.length after', gMines.length)
+}
+
+// function renderManuallyMinesBtn() {
+//     var strHtmlManuallyMines = `<button onclick="onClickManuallyMinesBtn()">Manually Positioned Mines</button>`
+//     var ellManuallyMines = document.querySelector('.ManuallyPositionedMines')
+//     ellManuallyMines.innerHTML = strHtmlManuallyMines
+
+// }
+
+// function onClickManuallyMinesBtn() {
+//     isManuallMines = true
+//     onInit()
+// }
 
 
 
 //Called when a cell is clicked
 
-function onCellClicked(elCell, i, j) {
+//function onCellClicked(elCell, i, j) {
+function onCellClicked(i, j) {
 
-    // if (cell.isShown || !gGame.isOn) return
-   
+    if (gBoard[i][j].isShown || !gGame.isOn) return
 
     if (gGame.shownCount === 0) {
+
         placeMines(gBoard, i, j)
         onTimer()
     }
 
+    // if (gGame.shownCount === 0 && isManuallMines) {
+    //     if (gMineCount < gLevel.MINES) {
+    //         gBoard[i][j].isMine = true
+    //         gMines.push({ i: i, j: j })
+    //         gMineCount++
+    //     }
+    //     if (gMineCount === gLevel.MINES) {
+    //         mapNeighbors(gBoard)
+    //         isManuallMines = false
+    //     }
+    // }
+
     if (gHintIsOn) {
-        handleHint(i,j)
-
-  
-
-        
+        handleHint(i, j)
 
     } else {
 
@@ -338,33 +472,33 @@ function onCellClicked(elCell, i, j) {
 
 }
 
-function handleHint(i,j){
+function handleHint(i, j) {
 
     var revealedCells = []
-    
+
     for (var idxI = i - 1; idxI <= i + 1; idxI++) {
         if (idxI < 0 || idxI > gBoard.length - 1) continue
         for (var idxJ = j - 1; idxJ <= j + 1; idxJ++) {
             if (idxJ < 0 || idxJ > gBoard[idxI].length - 1) continue
             if (!gBoard[idxI][idxJ].isShown) {
                 gBoard[idxI][idxJ].isShown = true
-                revealedCells.push({i:idxI,j:idxJ})
+                revealedCells.push({ i: idxI, j: idxJ })
             }
         }
-    } 
+    }
 
     renderBoard(gBoard)
 
     setTimeout(() => {
-        for (var idxI = 0; idxI< revealedCells.length; idxI++) {
-       
-                    gBoard[revealedCells[idxI].i][revealedCells[idxI].j].isShown = false
-                
-                }
+        for (var idxI = 0; idxI < revealedCells.length; idxI++) {
 
+            gBoard[revealedCells[idxI].i][revealedCells[idxI].j].isShown = false
+
+        }
+        gHintIsOn = false
         renderBoard(gBoard)
-        
-      }, 1000)
+
+    }, 1000)
 }
 
 
@@ -398,19 +532,22 @@ function onCellMarked(elCell, i, j) {
 function checkGameOver() {
     var allMinesMarked
     var markedMines = 0
+    var shownMines = 0
 
     for (var i = 0; i < gMines.length; i++) {
         var currMine = gBoard[gMines[i].i][gMines[i].j]
         if (currMine.isMarked) markedMines++
+        if (currMine.isShown) shownMines++
     }
 
-    if (markedMines === gLevel.MINES) {
+    if (markedMines + shownMines === gLevel.MINES) {
         allMinesMarked = true
     } else {
         allMinesMarked = false
     }
 
-
+    console.log('gGame.shownCount', gGame.shownCount)
+    console.log('allMinesMarked', allMinesMarked)
     if (gGame.shownCount === (gLevel.SIZE ** 2 - gLevel.MINES) && allMinesMarked) {
         gGame.isOn = false
         gIsvictory = true
@@ -420,22 +557,20 @@ function checkGameOver() {
         stopTimer()
         return true
     } else return false
-
-
-
 }
 
 function checkBestScore() {
-    gBestScoreLevel = 'bestScore' + gLevel.SIZE
-    console.log('gBestScoreLevel',gBestScoreLevel)
+
     if (localStorage.getItem(gBestScoreLevel) === null) {
-        localStorage.setItem(gBestScoreLevel, elapsedTime)
-    } else if (localStorage.getItem(gBestScoreLevel) > elapsedTime) {
-        localStorage.setItem(gBestScoreLevel, elapsedTime)
+        localStorage.setItem(gBestScoreLevel, gSeconds)
+    } else if (localStorage.getItem(gBestScoreLevel) > gSeconds) {
+        localStorage.setItem(gBestScoreLevel, gSeconds)
+
     }
 }
 
 function renderBestScore() {
+
     var bestScore = localStorage.getItem(gBestScoreLevel)
     if (bestScore !== null) {
         var strHtmlBestScore = `Best Score: ${bestScore} seconds`
@@ -472,35 +607,37 @@ function expandShown(i, j) {
 function onTimer() {
     if (!isRuning) {
         startTime = Date.now()
-        timer = setInterval(update,50)
+        timer = setInterval(updateTimer, 50)
         isRuning = true
     }
-  }
+}
 
-  function update() {
+function updateTimer() {
     var currentTime = Date.now()
     elapsedTime = currentTime - startTime
-    var seconds  = Math.floor(elapsedTime / 1000 % 60)
-    var milliSeconds  = Math.floor(elapsedTime % 1000 )
-    seconds = String(seconds).padStart(2,'0')
-    milliSeconds= String(milliSeconds).padStart(3,'0')
+    gSeconds = Math.floor(elapsedTime / 1000 % 60)
+    var milliSeconds = Math.floor(elapsedTime % 1000)
+    gSeconds = String(gSeconds).padStart(2, '0')
+    milliSeconds = String(milliSeconds).padStart(3, '0')
 
-    display.textContent = `${seconds}:${milliSeconds}`
+    display.textContent = (gSeconds < 100) ? `0${gSeconds}` : `${gSeconds}`
+    // display.textContent = `${seconds}:${milliSeconds}`
 
-  }
+}
 
-  function stopTimer() {
+function stopTimer() {
     if (isRuning) {
         clearInterval(timer)
         elapsedTime = Date.now - startTime
         isRuning = false
     }
-  }
+}
 
-  function resetTimer() {
+function resetTimer() {
     clearInterval(timer)
     isRuning = false
     startTime = 0
-    elapsedTime = 0 
-    display.textContent = '00:000'
-  }
+    elapsedTime = 0
+    display.textContent = '000'
+    // display.textContent = '00:000'
+}

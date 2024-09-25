@@ -1,14 +1,14 @@
 'use strict'
 
-const MINE = '<img src= "/img/0-mine.png" width="20" height="20" >' //'💣'
-const FLAG = '<img src= "/img/0-flag.png" width="20" height="20" >'//'🚩'
-const SMILEYNORMAL = '<img src= "/img/tiffi-normal.png" width="50" height="50" >'//'😄'
-const SMILEYDEAD = '<img src= "/img/tiffi-lose.png" width="50" height="50" >'//'🤯'
-const SMILEYWIN = '<img src= "/img/tiffi-win.png" width="50" height="50" >'//'😎'
-const LIFE = '<img src= "/img/0-life.png" width="20" height="20" >'//'💗'
-const LOST_LIFE = '<img src= "/img/0-lostlife.png" width="20" height="20" >'//'💗'
-const HINT = '<img src= "/img/0-unusedhint.png" width="20" height="20" >'//'💡'
-const USED_HINT = '<img src= "/img/0-usedhint.png" width="20" height="20" >'//'🔅'
+const MINE = '<img src= "/img/0-mine.png" width="20" height="20">'
+const FLAG = '<img src= "/img/0-flag.png" width="20" height="20">'
+const SMILEYNORMAL = '<img src= "/img/tiffi-normal.png" width="50" height="50">'
+const SMILEYDEAD = '<img src= "/img/tiffi-lose.png" width="50" height="50">'
+const SMILEYWIN = '<img src= "/img/tiffi-win.png" width="50" height="50">'
+const LIFE = '<img src= "/img/0-life.png" width="20" height="20">'
+const LOST_LIFE = '<img src= "/img/0-lostlife.png" width="20" height="20">'
+const HINT = '<img src= "/img/0-unusedhint.png" width="20" height="20">'
+const USED_HINT = '<img src= "/img/0-usedhint.png" width="20" height="20">'
 
 var gBoard = []
 

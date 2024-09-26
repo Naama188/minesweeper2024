@@ -1,11 +1,11 @@
 @font-face { 
    font-family: "chocoladinedemo"; 
     /* IE */
-    src: url('./fonts/chocoladinedemo.eot');
+    src: url(../fonts/chocoladinedemo.eot);
     /* IE */
 
     /* Not IE */
-    src: local("chocoladinedemo"), url('./fonts/chocoladinedemo.ttf');
+    src: local("chocoladinedemo"), url(../fonts/chocoladinedemo.ttf);
     /* format("truetype"); */
  /* Not IE */
 }

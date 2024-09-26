@@ -446,6 +446,7 @@ function onClickMineExterminator() {
 
 }
 
+
 ///// Cell Clicked /////
 
 function onCellClicked(i, j) {

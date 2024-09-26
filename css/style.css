@@ -1,16 +1,26 @@
-body {
+@font-face { 
+   font-family: "chocoladinedemo"; 
+    /* IE */
+    src: url('./fonts/chocoladinedemo.eot');
+    /* IE */
 
+    /* Not IE */
+    src: local("chocoladinedemo"), url('./fonts/chocoladinedemo.ttf');
+    /* format("truetype"); */
+ /* Not IE */
+}
+
+body {
     text-align: center;
     background-attachment: fixed;
     background-image: url(../img/background1.webp);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    font-family: monospace;
-    font-size: medium;
-    font-weight: bold;
-
-
+    font-family: 'chocoladinedemo';
+    font-size: x-large;
+    font-weight: normal;
+    overflow: auto;
 }
 
 h1 {
@@ -21,24 +31,17 @@ h1 {
 
 }
 
-/* .header{
-
-    margin: auto;
-    -webkit-text-stroke: black 0.5px;
-    
-} */
-
 .footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
     background-color: #a20dbd;
-    /* : 40px; */
     color: white;
     text-align: center;
-    font-family: monospace;
-    font-size: 8;
+    font-family: 'chocoladinedemo';
+    font-size: large;
+    font-weight: normal;
 }
 
 table {
@@ -55,7 +58,9 @@ table td {
     text-align: center;
     width: 25px;
     height: 25px;
-
+    font-family: 'chocoladinedemo';
+    font-size: 17px;
+    font-weight: normal;
 }
 
 .hidden {
@@ -70,7 +75,7 @@ table td {
             #e993ba 80%,
             #bf5885 80%,
             #bf5885 100%);
-    /* background-color:rgb(204, 65, 204); */
+    
     border-radius: 10%;
     border: 1px, solid, rgba(255, 255, 255, 0);
 }
@@ -82,15 +87,11 @@ table td {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(0px);
     -webkit-backdrop-filter: blur(0px);
-    border: 1px solid rgba(109, 133, 211, 1);
-    /* background-color:rgba(245, 245, 245, 0.312);
-    border: 1px,solid,rgba(255, 255, 255, 0); */
+    border: 1px solid rgb(109, 133, 211);
     border-radius: 10%;
-
 }
 
 .timer {
-
     margin-left: auto;
     margin-right: auto;
     display: inline;
@@ -98,9 +99,10 @@ table td {
     height: 25px;
     text-align: center;
     padding: 5px 0px 5px 0;
-    font-family: monospace;
-    font-size: medium;
-    font-weight: bold;
+    font-family: 'chocoladinedemo';
+    font-size:  x-large;
+    font-weight: normal;
+    color: #521900;
 }
 
 .time {
@@ -108,7 +110,6 @@ table td {
 }
 
 .smiley {
-
     text-align: center;
     margin: 5px;
     background-color: Transparent;
@@ -116,6 +117,7 @@ table td {
     border: none;
     cursor:pointer;
     overflow:hidden;
+    display: inline-block;
 }
 
 .smiley img {
@@ -124,7 +126,6 @@ table td {
     border: none;
     cursor:pointer;
     overflow:hidden;
-    
 }
 
 .b4 {
@@ -133,68 +134,63 @@ table td {
     border: none;
     cursor:pointer;
     overflow:hidden;
+    display: inline-block;
     
 }
 
-.line2 {
-
-    margin: 5px;
-    padding: 5px;
+.marksleft{
     text-align: center;
-
+    display: inline-block;
+    padding: 5px;
+    vertical-align: middle;
+    font-size: x-large;
+    font-weight: normal;
+    color: #521900;
+    cursor: pointer;
 }
 
 .life {
     text-align: center;
     display: inline-block;
-
     padding: 5px;
     vertical-align: middle;
-
-
-    font-size: 20;
+    font-size: x-large;
+    font-weight: normal;
+    color: #521900;
     cursor: pointer;
-
 }
 
 .hints {
     text-align: center;
     display: inline-block;
-
     padding: 5px;
     vertical-align: middle;
-
-    font-size: 2o;
+    font-size: x-large;
+    font-weight: normal;
+    color: #521900;
     cursor: pointer;
-
 }
 
 .bestScore {
     text-align: center;
     color: black;
     display: inline;
-    font-size: 20;
-    margin-top: 5px;
     margin-left: auto;
     margin-right: auto;
-
-
+    font-family: 'chocoladinedemo';
+    font-size: x-large;
+    font-weight: normal;
+    color: #521900;
 }
 
 .buttons {
     text-align: center;
-    margin-bottom: 10px;
-    
+    margin-bottom: 10px;  
 }
 
 .buttons button {
     margin-left: 10px;
     margin-right: 10px;
-    /* border-radius: 1px;
-    background-color: rgb(204, 65, 204);
-    color: black;
-    font-family: Lucida Sans Unicode;
-    cursor: pointer; */
 }
 
 .b1 {
@@ -206,17 +202,19 @@ table td {
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
+    font-family: 'chocoladinedemo';
+	font-size:20px;
+	font-weight:normal;
 	padding:6px 18px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #c70067;
 }
+
 .b1:hover {
 	background:linear-gradient(to bottom, #ef027d 5%, #ff5bb0 100%);
 	background-color:#ef027d;
 }
+
 .b1:active {
 	position:relative;
 	top:1px;
@@ -231,17 +229,19 @@ table td {
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
+    font-family: 'chocoladinedemo';
+	font-size:20px;
+	font-weight:normal;
 	padding:6px 18px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #9752cc;
 }
+
 .b2:hover {
 	background:linear-gradient(to bottom, #bc80ea 5%, #dfbdfa 100%);
 	background-color:#bc80ea;
 }
+
 .b2:active {
 	position:relative;
 	top:1px;
@@ -256,39 +256,50 @@ table td {
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
+    font-family: 'chocoladinedemo';
+	font-size:20px;
+	font-weight:normal;
 	padding:6px 18px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #cc9f52;
 }
+
 .b3:hover {
 	background:linear-gradient(to bottom, #fb9e25 5%, #ffc477 100%);
 	background-color:#fb9e25;
 }
+
 .b3:active {
 	position:relative;
 	top:1px;
 }
 
+.line1 {
 
-.line3 {
-
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
     display: grid;
-    grid-template-columns: auto auto;     
-    /* gap: 10px;  */
-
+    grid-template-columns: 200px auto 200px;     
+    justify-content: center;
+    grid-column-start: 50%;
+    grid-column-end: 50%;
 }
 
 .SafeClick {
     text-align: center;
     padding: 10px 20px;
     display: inline-block;
-     /* vertical-align: middle;  */
+     font-size: large;
+    font-weight: normal;
+    }
 
-
-    font-size: 30;}
+.clicksAvailable {
+        font-family: 'chocoladinedemo';
+        font-size: x-large;
+        font-weight: normal;
+        color: #521900;  
+    }
 
 .b5 {
 	box-shadow:inset 0px 0px 0px 0px #f0f7fa;
@@ -299,9 +310,9 @@ table td {
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
+    font-family: 'chocoladinedemo';
+	font-size:20px;
+	font-weight:normal;
 	padding:6px 18px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #5b6178;
@@ -316,14 +327,10 @@ table td {
 	top:1px;
 }
 
-
 .MineExterminator {
     text-align: center;
     padding: 10px 20px;
     display: inline-block;
- 
-
-
     font-size: 20;
 }
 
@@ -336,9 +343,9 @@ table td {
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
+    font-family: 'chocoladinedemo';
+	font-size:20px;
+	font-weight:normal;
 	padding:6px 18px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #9b14b3;

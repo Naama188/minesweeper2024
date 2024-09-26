@@ -5,56 +5,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
     <title>MineSweeper</title>
 </head>
 
+<!-- <body onload="onInit(); playSound('sounds/oninit.wav')"> -->
+
 <body onload="onInit()">
-    <h1><img src="img/logo.png" ></h1>
-
-
-    <div class="header"></div>
-        <div class="buttons"></div>
+    <h1><img src="img/logo.png" width="400"></h1>
+    <div class="buttons"></div>
+    <div class="line1">
+        <div class='line3a'>
+            <div class="SafeClick"></div>
+            <div class="clicksAvailable"></div>
+        </div>
         <div class="smiley"></div>
-        <div class="timer">Timer:
-            <div class="time"> 000</div>
-        </div>
-      
-        <div class="marked"></div>
-        <div class='line2'>
-            <div class="life">Life</div>
-            <div class="hints">Hints</div>
-        </div>
-        <div class='line3'>
-            <div class='line3a'>
-                <div class="SafeClick"></div>
-                <div class="clicksAvailable"></div>
-            </div>
-
-            <div class="MineExterminator"></div>
-        </div>
-
-
-        <!-- <div class="ManuallyPositionedMines"></div> -->
-        <div class="bestScore"></div>
-        <!-- <div class="bestScore"> 
-            <div class="score"> 00:000</div></div> -->
+        <div class="MineExterminator"></div>
     </div>
 
 
 
+
+    <div class='line2'>
+        
+        <div class="life">Life</div>
+        <div class="hints">Hints</div>
+        <div class="marksleft"></div>
+        <div class="timer">Time:
+            <div class="time"> 000</div>
+        </div>
+        <div class="bestScore"></div>
+    </div>
+    
 
     <table class="board-container">
         <tbody class="board"></tbody>
     </table>
 
-   
-
-
     <div class="footer">
         <p>Naama Tanne</p>
     </div>
-
-
 
     <script src="js/main.js "></script>
     <script src="js/utils.js"></script>

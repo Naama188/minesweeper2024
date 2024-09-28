@@ -42,6 +42,7 @@ var gBestScoreLevel = 'bestScore' + gLevel.SIZE
 var gLifeLost
 var gHintUsed
 var gHintIsOn
+var gMineExterminatorUsed
 var gSafeClicks
 
 var display = document.querySelector('.time')
@@ -52,7 +53,16 @@ var gSeconds
 var gSecondsDisp
 var elapsedTime = 0
 
+///// hide the context menu on right click ////
+
 window.addEventListener("contextmenu", e => e.preventDefault())
+
+///// Dark Mode /////
+
+const toggleButton = document.getElementById('dark-mode-toggle')  
+toggleButton.addEventListener('click', function () {
+    document.body.classList.toggle('dark-mode')
+  })
 
 ///// The Game /////
 
@@ -64,6 +74,7 @@ function onInit() {
     gLifeLost = 0
     gHintUsed = 0
     gHintIsOn = false
+    gMineExterminatorUsed = false
     gMines = []
     gSafeClicks = 3
     gBestScoreLevel = 'bestScore' + gLevel.SIZE
@@ -133,7 +144,6 @@ function buildBoard() {
     return board
 }
 
-
 function placeMines(board, idxI, idxJ) {
 
     var mineCount = 0
@@ -173,7 +183,6 @@ function setMinesNegsCount(cellI, cellJ, mat) {
     }
     return minesAroundCount
 }
-
 
 function renderBoard(board) {
     var strHTML = ''
@@ -382,7 +391,6 @@ function renderSafeClicksCounter() {
     clicksAvailable.textContent = gSafeClicks + ' clicks available'
 }
 
-
 function onSafeClick() {
 
     if (!gSafeClicks) return
@@ -416,36 +424,55 @@ function onSafeClick() {
 }
 
 function renderMineExterminatorBtn() {
-    var strHtmlMineExterminator = `<button onclick="onClickMineExterminator()"class="b6">Mine Exterminator</button>`
+    var classBtn = (gMineExterminatorUsed) ?  'used' : 'unused'
+    var strHtmlMineExterminator = `<button onclick="onClickMineExterminator()"class="b6${classBtn}">Mine Exterminator</button>`
+
 
     var elMineExtermiantor = document.querySelector('.MineExterminator')
     elMineExtermiantor.innerHTML = strHtmlMineExterminator
+
+   
 
 }
 
 ///// Mine Exterminator /////
 
 function onClickMineExterminator() {
-    console.log('gMines.length before', gMines.length)
-    if (gGame.shownCount > 0) {
-        if (gLevel.MINES - gMines.length < gLevel.MINEEXTERMINATOR) {
-            playSound('sounds/mineexterminator.wav')
-        }
-        while (gLevel.MINES - gMines.length < gLevel.MINEEXTERMINATOR) {
-            var Idx = getRandomInt(0, gMines.length)
-            if (!gBoard[gMines[Idx].i][gMines[Idx].j].isMarked) {
-                gBoard[gMines[Idx].i][gMines[Idx].j].isMine = false
-                gMines.splice(Idx, 1)
+    
+        var minesLeft = 0
+        var minesExterminated = 0
+        var Idx 
+        if (gGame.shownCount > 0) {
+            if(!gMineExterminatorUsed){
+            for (var i = 0; i < gMines.length; i++) {
+                var currMine = gBoard[gMines[i].i][gMines[i].j]
+                if(!currMine.isShown && !currMine.isMarked){
+                    minesLeft++ 
+                }
             }
+            if (minesExterminated < gLevel.MINEEXTERMINATOR && minesLeft > 0) {
+                playSound('sounds/mineexterminator.wav')
+            }
+            while (minesExterminated < gLevel.MINEEXTERMINATOR && minesLeft > 0) {
+                Idx = getRandomInt(0, gMines.length)
+                currMine = gBoard[gMines[Idx].i][gMines[Idx].j]
+                if (!currMine.isMarked && !currMine.isShown) {
+                    currMine.isMine = false
+                    gMines.splice(Idx, 1)
+                    minesLeft--
+                    minesExterminated++
+                }
+            }
+        
+            gMineExterminatorUsed = true
+            mapNeighbors(gBoard)
+            renderMarksLeft()
+            renderBoard(gBoard)
+            renderMineExterminatorBtn()
         }
-
-        mapNeighbors(gBoard)
-        renderMarksLeft()
-        renderBoard(gBoard)
     }
-
+    
 }
-
 
 ///// Cell Clicked /////
 

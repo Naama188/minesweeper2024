@@ -13,7 +13,7 @@
 body {
     text-align: center;
     background-attachment: fixed;
-    background-image: url(../img/background1.webp);
+    background-image: url(../img/background.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -21,15 +21,60 @@ body {
     font-size: x-large;
     font-weight: normal;
     overflow: auto;
+    color: #521900;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+body.dark-mode {
+    text-align: center;
+    background-attachment: fixed;
+    background-image: url(../img/backgrounddark.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'chocoladinedemo';
+    font-size: x-large;
+    font-weight: normal;
+    overflow: auto;
+    color:white;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.darkModeBtn {
+	box-shadow: 0px 0px 0px 2px #54a3f7;
+	background:linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+	background-color:#007dc1;
+	border-radius:10px;
+	border:1px solid #124d77;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family: 'chocoladinedemo';
+	font-size:  medium;
+    font-weight: normal;
+	padding:5px 5px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+    margin-bottom: 5px;
+}
+.darkModeBtn:hover {
+	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+	background-color:#0061a7;
+}
+.darkModeBtn:active {
+	position:relative;
+	top:1px;
 }
 
 h1 {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
     margin-left: auto;
     margin-right: auto;
-
 }
+
 
 .footer {
     position: fixed;
@@ -45,7 +90,6 @@ h1 {
 }
 
 table {
-    margin-top: 5px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -102,7 +146,7 @@ table td {
     font-family: 'chocoladinedemo';
     font-size:  x-large;
     font-weight: normal;
-    color: #521900;
+    /* color: #521900; */
 }
 
 .time {
@@ -145,7 +189,6 @@ table td {
     vertical-align: middle;
     font-size: x-large;
     font-weight: normal;
-    color: #521900;
     cursor: pointer;
 }
 
@@ -156,7 +199,6 @@ table td {
     vertical-align: middle;
     font-size: x-large;
     font-weight: normal;
-    color: #521900;
     cursor: pointer;
 }
 
@@ -167,25 +209,23 @@ table td {
     vertical-align: middle;
     font-size: x-large;
     font-weight: normal;
-    color: #521900;
     cursor: pointer;
 }
 
 .bestScore {
     text-align: center;
-    color: black;
     display: inline;
     margin-left: auto;
     margin-right: auto;
     font-family: 'chocoladinedemo';
     font-size: x-large;
     font-weight: normal;
-    color: #521900;
 }
 
 .buttons {
     text-align: center;
-    margin-bottom: 10px;  
+    margin-top: 5px;
+    margin-bottom: 5px;  
 }
 
 .buttons button {
@@ -205,7 +245,7 @@ table td {
     font-family: 'chocoladinedemo';
 	font-size:20px;
 	font-weight:normal;
-	padding:6px 18px;
+	padding:5px 15px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #c70067;
 }
@@ -232,7 +272,7 @@ table td {
     font-family: 'chocoladinedemo';
 	font-size:20px;
 	font-weight:normal;
-	padding:6px 18px;
+	padding:5px 15px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #9752cc;
 }
@@ -259,7 +299,7 @@ table td {
     font-family: 'chocoladinedemo';
 	font-size:20px;
 	font-weight:normal;
-	padding:6px 18px;
+	padding:5px 15px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #cc9f52;
 }
@@ -288,7 +328,7 @@ table td {
 
 .SafeClick {
     text-align: center;
-    padding: 10px 20px;
+    padding:4px 12px;
     display: inline-block;
      font-size: large;
     font-weight: normal;
@@ -298,7 +338,6 @@ table td {
         font-family: 'chocoladinedemo';
         font-size: x-large;
         font-weight: normal;
-        color: #521900;  
     }
 
 .b5 {
@@ -313,7 +352,7 @@ table td {
     font-family: 'chocoladinedemo';
 	font-size:20px;
 	font-weight:normal;
-	padding:6px 18px;
+	padding:5px 15px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #5b6178;
     padding: 10px 20px;
@@ -329,12 +368,12 @@ table td {
 
 .MineExterminator {
     text-align: center;
-    padding: 10px 20px;
+    padding:5px 25px;
     display: inline-block;
     font-size: 20;
 }
 
-.b6 {
+.b6unused{
 	box-shadow:inset 0px 0px 0px 0px #e184f3;
 	background:linear-gradient(to bottom, #c123de 5%, #a20dbd 100%);
 	background-color:#c123de;
@@ -346,15 +385,42 @@ table td {
     font-family: 'chocoladinedemo';
 	font-size:20px;
 	font-weight:normal;
-	padding:6px 18px;
+	padding:5px 15px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #9b14b3;
 }
-.b6:hover {
+.b6unused:hover {
 	background:linear-gradient(to bottom, #a20dbd 5%, #c123de 100%);
 	background-color:#a20dbd;
 }
-.b6:active {
+.b6unused:active {
 	position:relative;
 	top:1px;
 }
+
+.b6used{
+	box-shadow:inset 0px 0px 0px 0px #aaa7ab;
+	background:linear-gradient(to bottom, #3e393f 5%, #7a777a 100%);
+	background-color:#3e393f 5%;
+	border-radius:12px;
+	border:2px solid #7a777a 5%;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+    font-family: 'chocoladinedemo';
+	font-size:20px;
+	font-weight:normal;
+	padding:5px 15px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #7a777a;
+}
+/* .b6used:hover {
+	background:linear-gradient(to bottom,#3e393f 5%, #3e393f 100%);
+	background-color:#3e393f;
+}
+.b6used:active {
+	position:relative;
+	top:1px;
+} */
+
+

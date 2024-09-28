@@ -194,7 +194,6 @@ function renderBoard(board) {
             var cell = board[i][j]
             var className = `cell cell-${i}-${j}`
             className += cell.isShown ? ' shown' : ' hidden'
-            //strHTML += '<td class = "' + className + '"' + ' onclick="onCellClicked(this,' + i + ',' + j + ')">'
             if (cell.isShown) {
                 if (!cell.isMine) {
                     cellDisp = cell.minesAroundCount
@@ -516,6 +515,7 @@ function onCellClicked(i, j) {
                 playSound('sounds/lostlife.wav')
                 gLifeLost++
                 renderLives()
+                renderMarksLeft()
             }
         }
 
